@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Roof Infrastructure</title>
+  <script src="https://tailwindcss.com"></script>
+  <script src="https://cloudflare.com"></script>
+  <script src="https://cloudflare.com"></script>
+  <style>
+    .layer-graphic {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    }
+  </style>
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans antialiased overflow-x-hidden">
+
+  <!-- SECTION 1: THE SCROLL ZOOM OUT -->
+  <div id="scroll-section" class="relative h-[300vh] w-full bg-stone-900">
+    <div class="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+      
+      <h1 id="hero-text" class="absolute top-20 text-4xl md:text-6xl font-bold tracking-tight text-center px-4 max-w-3xl z-10 drop-shadow-lg">
+        Infrastructure is growing up.
+      </h1>
+
+      <!-- ZOOM OBJECT: Starts massive (macro-flora) and shrinks into a building roof -->
+      <div id="zoom-hardware" class="w-full max-w-5xl px-4 scale-[3.5] transform origin-center">
+        <div class="aspect-[16/9] rounded-2xl shadow-2xl overflow-hidden relative border border-stone-800">
+          
+          <!-- Replace this URL with a high-res drone photo of a building with a green roof -->
+          <img src="https://unsplash.com" 
+               alt="Urban Green Roof" 
+               class="w-full h-full object-cover">
+               
+          <!-- Soft overlay to blend text -->
+          <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- SECTION 2: THE CLOSER LOOK CLICK INTERACTION -->
+  <div class="min-h-screen w-full py-32 px-6 max-w-6xl mx-auto flex flex-col justify-center">
+    <span class="text-emerald-400 font-semibold tracking-widest uppercase text-sm mb-2">Anatomy of an Ecosystem</span>
+    <h2 class="text-3xl md:text-5xl font-bold mb-12 tracking-tight">Take a closer look inside.</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      
+      <!-- Visual Display Canvas (Left Side) -->
+      <div class="relative aspect-square w-full bg-stone-900 rounded-3xl overflow-hidden flex items-center justify-center p-8 border border-stone-800 shadow-inner">
+        
+        <!-- View 1: Vegetation Layer -->
+        <div id="view-veg" class="layer-graphic absolute inset-0 flex flex-col items-center justify-center p-12 text-center opacity-100 transform scale-100">
+          <div class="w-full h-48 bg-emerald-800 rounded-xl shadow-lg mb-6 overflow-hidden flex items-center justify-center border border-emerald-600">
+            <span class="text-5xl">🌱</span>
+          </div>
+          <p class="text-2xl font-bold text-emerald-400">1. Vegetation & Soil</p>
+          <p class="text-sm text-stone-400 mt-2 max-w-sm">Drought-tolerant Sedum species and lightweight engineered growth medium designed to absorb storm water.</p>
+        </div>
+
+        <!-- View 2: Filter & Drainage -->
+        <div id="view-drain" class="layer-graphic absolute inset-0 flex flex-col items-center justify-center p-12 text-center opacity-0 transform scale-95 pointer-events-none">
+          <div class="w-full h-48 bg-amber-900/50 rounded-xl shadow-lg mb-6 overflow-hidden flex items-center justify-center border border-amber-700">
+            <span class="text-5xl">💧</span>
+          </div>
+          <p class="text-2xl font-bold text-amber-500">2. Drainage & Retention</p>
+          <p class="text-sm text-stone-400 mt-2 max-w-sm">A dimpled plastic matrix that traps just enough water to keep roots hydrated while safely channeling excess downpours away.</p>
+        </div>
+
+        <!-- View 3: Waterproof Membrane -->
+        <div id="view-protect" class="layer-graphic absolute inset-0 flex flex-col items-center justify-center p-12 text-center opacity-0 transform scale-95 pointer-events-none">
+          <div class="w-full h-48 bg-slate-800 rounded-xl shadow-lg mb-6 overflow-hidden flex items-center justify-center border border-slate-600">
+            <span class="text-5xl">🛡️</span>
+          </div>
+          <p class="text-2xl font-bold text-slate-400">3. Root Barrier & Protection</p>
+          <p class="text-sm text-stone-400 mt-2 max-w-sm">A heavy-duty, leak-proof membrane prevents aggressive root systems from piercing the structural building deck beneath.</p>
+        </div>
+        
+      </div>
+
+      <!-- Navigation Toggles (Right Side) -->
+      <div class="flex flex-col gap-6">
+        
+        <button onclick="switchView('veg')" id="btn-veg" class="toggle-btn text-left border-l-2 border-emerald-500 pl-6 py-3 transition-all">
+          <h3 class="text-xl font-bold text-stone-100">Vegetation Blanket</h3>
+          <p class="text-sm text-stone-400 mt-1">Combats the urban heat island effect and filters carbon dioxide.</p>
+        </button>
+
+        <button onclick="switchView('drain')" id="btn-drain" class="toggle-btn text-left border-l-2 border-stone-700 pl-6 py-3 transition-all hover:border-stone-400">
+          <h3 class="text-xl font-bold text-stone-400">Water Management</h3>
+          <p class="text-sm text-stone-500 mt-1">Reduces city sewer stress by capturing up to 70% of rainfall.</p>
+        </button>
+
+        <button onclick="switchView('protect')" id="btn-protect" class="toggle-btn text-left border-l-2 border-stone-700 pl-6 py-3 transition-all hover:border-stone-400">
+          <h3 class="text-xl font-bold text-stone-400">Structural Shielding</h3>
+          <p class="text-sm text-stone-500 mt-1">Doubles the physical lifespan of the underlying roof insulation.</p>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Scroll zoom mechanic
+    gsap.to("#zoom-hardware", {
+      scale: 1,
+      scrollTrigger: {
+        trigger: "#scroll-section",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      }
+    });
+
+    // Fade headline out
+    gsap.to("#hero-text", {
+      opacity: 0,
+      y: -50,
+      scrollTrigger: {
+        trigger: "#scroll-section",
+        start: "top top",
+        end: "top -30%",
+        scrub: true,
+      }
+    });
+
+    // Tab switcher
+    function switchView(targetView) {
+      document.querySelectorAll('.layer-graphic').forEach(layer => {
+        layer.classList.remove('opacity-100', 'scale-100');
+        layer.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      });
+
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.classList.remove('border-emerald-500', 'border-stone-400');
+        btn.classList.add('border-stone-700');
+        btn.querySelector('h3').classList.replace('text-stone-100', 'text-stone-400');
+      });
+
+      const activeLayer = document.getElementById(`view-${targetView}`);
+      activeLayer.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+      activeLayer.classList.add('opacity-100', 'scale-100');
+
+      const activeBtn = document.getElementById(`btn-${targetView}`);
+      activeBtn.classList.remove('border-stone-700');
+      activeBtn.classList.add('border-emerald-500');
+      activeBtn.querySelector('h3').classList.replace('text-stone-400', 'text-stone-100');
+    }
+  </script>
+</body>
+</html>
